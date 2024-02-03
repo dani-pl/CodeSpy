@@ -1,4 +1,4 @@
-package com.danipl.frameworkguesser
+package com.danipl.frameworkguesser.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.danipl.frameworkguesser.R
 
 @Composable
 internal fun HomeRoute(

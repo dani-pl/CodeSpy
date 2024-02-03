@@ -1,4 +1,4 @@
-package com.danipl.frameworkguesser
+package com.danipl.frameworkguesser.ui
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
