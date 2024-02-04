@@ -1,4 +1,4 @@
-package com.danipl.frameworkguesser
+package com.danipl.codespy
 
 import org.junit.Test
 

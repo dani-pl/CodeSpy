@@ -1,7 +1,7 @@
-package com.danipl.frameworkguesser.data
+package com.danipl.codespy.data
 
 import android.content.Context
-import com.danipl.frameworkguesser.data.models.AppInfoDataModel
+import com.danipl.codespy.data.models.AppInfoDataModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

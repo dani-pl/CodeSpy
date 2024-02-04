@@ -1,4 +1,4 @@
-package com.danipl.frameworkguesser.ui.theme
+package com.danipl.codespy.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

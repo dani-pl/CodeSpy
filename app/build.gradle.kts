@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.danipl.frameworkguesser"
+    namespace = "com.danipl.codespy"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.danipl.frameworkguesser"
+        applicationId = "com.danipl.codespy"
         minSdk = 24
         targetSdk = 29
         versionCode = 1

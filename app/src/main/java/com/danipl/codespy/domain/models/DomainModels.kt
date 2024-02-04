@@ -1,4 +1,4 @@
-package com.danipl.frameworkguesser.domain.models
+package com.danipl.codespy.domain.models
 
 import android.graphics.drawable.Drawable
 

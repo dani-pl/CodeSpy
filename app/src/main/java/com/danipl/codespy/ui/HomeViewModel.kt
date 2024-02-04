@@ -1,9 +1,9 @@
-package com.danipl.frameworkguesser.ui
+package com.danipl.codespy.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.danipl.frameworkguesser.domain.GetReactNativeAppsUseCase
-import com.danipl.frameworkguesser.domain.models.AppInfo
+import com.danipl.codespy.domain.GetReactNativeAppsUseCase
+import com.danipl.codespy.domain.models.AppInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -1,4 +1,4 @@
-package com.danipl.frameworkguesser.ui
+package com.danipl.codespy.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -21,8 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.danipl.frameworkguesser.R
-import com.danipl.frameworkguesser.domain.models.AppInfo
+import com.danipl.codespy.R
+import com.danipl.codespy.domain.models.AppInfo
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 
 @Composable

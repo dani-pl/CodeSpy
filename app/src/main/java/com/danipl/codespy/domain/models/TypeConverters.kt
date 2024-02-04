@@ -1,6 +1,6 @@
-package com.danipl.frameworkguesser.domain.models
+package com.danipl.codespy.domain.models
 
-import com.danipl.frameworkguesser.data.models.AppInfoDataModel
+import com.danipl.codespy.data.models.AppInfoDataModel
 
 fun AppInfoDataModel.toDomain(): AppInfo{
     return AppInfo(
