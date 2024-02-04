@@ -1,6 +1,7 @@
 package com.danipl.frameworkguesser.data
 
 import android.content.Context
+import com.danipl.frameworkguesser.data.models.AppInfoDataModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -10,11 +11,17 @@ class AdbRepository @Inject constructor(
 
     private val pm = appContext.packageManager
 
-    fun getReactNativeApps(): List<String> {
-        val installedReactNativeApps = mutableListOf<String>()
+    fun getReactNativeApps(): List<AppInfoDataModel> {
+        val installedReactNativeApps = mutableListOf<AppInfoDataModel>()
         pm.getInstalledApplications(0).forEach {
-            if (isReactNativeApp(it.packageName)){
-                installedReactNativeApps.add(it.loadLabel(pm).toString())
+            if (isReactNativeApp(it.packageName)) {
+                installedReactNativeApps.add(
+                    AppInfoDataModel(
+                        name = it.loadLabel(pm).toString(),
+                        icon = it.loadIcon(pm),
+                        packageName = it.packageName
+                    )
+                )
             }
         }
         return installedReactNativeApps

@@ -1,6 +1,8 @@
 package com.danipl.frameworkguesser.domain
 
 import com.danipl.frameworkguesser.data.AdbRepository
+import com.danipl.frameworkguesser.domain.models.AppInfo
+import com.danipl.frameworkguesser.domain.models.toDomain
 import javax.inject.Inject
 
 /**
@@ -9,7 +11,9 @@ import javax.inject.Inject
 class GetReactNativeAppsUseCase @Inject constructor(
     private val adbRepository: AdbRepository
 ) {
-    fun getReactNativeApps(): List<String> {
-        return adbRepository.getReactNativeApps()
+    fun getReactNativeApps(): List<AppInfo> {
+        return adbRepository.getReactNativeApps().map {
+            it.toDomain()
+        }
     }
 }

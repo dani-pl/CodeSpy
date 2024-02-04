@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">FrameworkGuesser</string>
-    <string name="home_screen_title">Framework Guesser</string>
-    <string name="app_is_react_native_explanation">%s is a React Native App</string>
-    <string name="app_is_not_react_native_explanation">%s is not a React Native App</string>
+    <string name="app_name">xFrameworkGuesser</string>
+    <string name="home_screen_title">React Native Apps</string>
 </resources>
