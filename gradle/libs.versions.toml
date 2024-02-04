@@ -1,4 +1,5 @@
 [versions]
+accompanistDrawablepainter = "0.30.1"
 agp = "8.3.0-alpha18"
 hiltAndroid = "2.48.1"
 hiltNavigationFragment = "1.1.0"
@@ -12,6 +13,7 @@ activityCompose = "1.8.2"
 composeBom = "2023.08.00"
 
 [libraries]
+accompanist-drawablepainter = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "accompanistDrawablepainter" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationFragment" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
