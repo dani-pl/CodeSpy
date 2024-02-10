@@ -5,7 +5,7 @@ import com.danipl.codespy.data.models.AppInfoDataModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class AdbRepository @Inject constructor(
+class PackageManagerRepository @Inject constructor(
     @ApplicationContext private val appContext: Context
 ) {
 
