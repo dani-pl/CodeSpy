@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "FrameworkGuesser"
+rootProject.name = "CodeSpy"
 include(":app")
  

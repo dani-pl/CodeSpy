@@ -1,4 +1,4 @@
-package com.danipl.frameworkguesser.ui.theme
+package com.danipl.codespy.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -38,7 +38,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun FrameworkGuesserTheme(
+fun CodeSpyTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
