@@ -3,6 +3,7 @@ package com.danipl.codespy.data
 import android.content.Context
 import com.danipl.codespy.data.models.AppInfoDataModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import timber.log.Timber
 import javax.inject.Inject
 
 class PackageManagerRepository @Inject constructor(
@@ -22,6 +23,9 @@ class PackageManagerRepository @Inject constructor(
                         packageName = it.packageName
                     )
                 )
+            } else if (isCordovaApp(it.packageName)){
+                Timber.d("The app ${it.packageName} is a CordovaApp")
+
             }
         }
         return installedReactNativeApps
@@ -38,4 +42,13 @@ class PackageManagerRepository @Inject constructor(
             false
         }
     }
+
+    private fun isCordovaApp(packageName: String): Boolean {
+        return pm
+                .getResourcesForApplication(packageName)
+                .assets
+                .list("www")
+                ?.contains("cordova.js") ?: false
+    }
+
 }
