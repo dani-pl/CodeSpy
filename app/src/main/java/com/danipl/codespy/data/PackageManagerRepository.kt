@@ -52,3 +52,7 @@ class PackageManagerRepository @Inject constructor(
     }
 
 }
+
+enum class Framework {
+    REACT_NATIVE, CORDOVA, UNCLASSIFIED
+}
