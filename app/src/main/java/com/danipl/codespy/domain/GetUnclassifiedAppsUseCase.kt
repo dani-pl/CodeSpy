@@ -9,11 +9,11 @@ import javax.inject.Inject
 /**
  * This use case fetches the apps that use react native in the user's phone.
  */
-class GetReactNativeAppsUseCase @Inject constructor(
+class GetUnclassifiedAppsUseCase @Inject constructor(
     private val packageManagerRepository: PackageManagerRepository
 ) {
-    fun getReactNativeApps(): List<AppInfo> {
-        return packageManagerRepository.getAppsByFramework(Framework.REACT_NATIVE).map {
+    fun getUnclassifiedApps(): List<AppInfo> {
+        return packageManagerRepository.getAppsByFramework(Framework.UNCLASSIFIED).map {
             it.toDomain()
         }
     }
