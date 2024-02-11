@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Code Spy</string>
-    <string name="home_screen_title">React Native Apps</string>
+    <string name="home_screen_title">Frameworks used by your apps</string>
 </resources>
