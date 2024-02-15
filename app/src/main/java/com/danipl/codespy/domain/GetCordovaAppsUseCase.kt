@@ -7,13 +7,13 @@ import com.danipl.codespy.domain.models.toDomain
 import javax.inject.Inject
 
 /**
- * This use case fetches the apps that use react native in the user's phone.
+ * This use case fetches the apps that use Cordova in the user's phone.
  */
-class GetReactNativeAppsUseCase @Inject constructor(
+class GetCordovaAppsUseCase @Inject constructor(
     private val packageManagerRepository: PackageManagerRepository
 ) {
-    fun getReactNativeApps(): List<AppInfo> {
-        return packageManagerRepository.getAppsByFramework(Framework.REACT_NATIVE).map {
+    fun getCordovaApps(): List<AppInfo> {
+        return packageManagerRepository.getAppsByFramework(Framework.CORDOVA).map {
             it.toDomain()
         }
     }
