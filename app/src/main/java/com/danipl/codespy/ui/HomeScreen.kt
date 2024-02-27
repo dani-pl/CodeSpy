@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -42,6 +41,7 @@ internal fun HomeRoute(
     HomeScreen(
         reactNativeApps = state.reactNativeApps,
         cordovaApps = state.cordovaApps,
+        flutterApps = state.flutterApps,
         unclassifiedApps = state.unclassifiedApps
     )
 }
@@ -51,6 +51,7 @@ internal fun HomeRoute(
 private fun HomeScreen(
     reactNativeApps: List<AppInfo>,
     cordovaApps: List<AppInfo>,
+    flutterApps: List<AppInfo>,
     unclassifiedApps: List<AppInfo>
 ) {
     Scaffold(
@@ -60,6 +61,7 @@ private fun HomeScreen(
             modifier = Modifier.padding(paddingValues),
             reactNativeApps = reactNativeApps,
             cordovaApps = cordovaApps,
+            flutterApps = flutterApps,
             unclassifiedApps = unclassifiedApps
         )
     }
@@ -71,6 +73,7 @@ private fun HomeContent(
     modifier: Modifier,
     reactNativeApps: List<AppInfo>,
     cordovaApps: List<AppInfo>,
+    flutterApps: List<AppInfo>,
     unclassifiedApps: List<AppInfo>
 ) {
     Column(
@@ -79,7 +82,7 @@ private fun HomeContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         var selectedIndex by remember { mutableStateOf(0) }
-        val options = listOf("RN", "Cordova", "Unclassified")
+        val options = listOf("RN", "Cordova", "Flutter")
 
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -105,7 +108,7 @@ private fun HomeContent(
         when(selectedIndex){
             0 -> listToShow = listToShow + reactNativeApps
             1 -> listToShow = listToShow + cordovaApps
-            2 -> listToShow = listToShow + unclassifiedApps
+            2 -> listToShow = listToShow + flutterApps
         }
 
         Column(
