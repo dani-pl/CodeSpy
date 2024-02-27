@@ -15,6 +15,7 @@ class PackageManagerRepository @Inject constructor(
     private val classifiedApps = mutableMapOf(
         Framework.REACT_NATIVE to mutableListOf<AppInfoDataModel>(),
         Framework.CORDOVA to mutableListOf<AppInfoDataModel>(),
+        Framework.FLUTTER to mutableListOf<AppInfoDataModel>(),
         Framework.UNCLASSIFIED to mutableListOf<AppInfoDataModel>()
     )
 
@@ -28,6 +29,7 @@ class PackageManagerRepository @Inject constructor(
             when {
                 isReactNativeApp(it.packageName) -> appFramework = Framework.REACT_NATIVE
                 isCordovaApp(it.packageName) -> appFramework = Framework.CORDOVA
+                isFlutterApp(it.packageName) -> appFramework = Framework.FLUTTER
             }
             classifiedApps[appFramework]?.add(
                 AppInfoDataModel(
@@ -59,8 +61,16 @@ class PackageManagerRepository @Inject constructor(
                 ?.contains("cordova.js") ?: false
     }
 
+    private fun isFlutterApp(packageName: String): Boolean {
+        return pm
+            .getResourcesForApplication(packageName)
+            .assets
+            .list("flutter_assets")
+            ?.contains("AssetManifest.json") ?: false
+    }
+
 }
 
 enum class Framework {
-    REACT_NATIVE, CORDOVA, UNCLASSIFIED
+    REACT_NATIVE, CORDOVA, FLUTTER, UNCLASSIFIED
 }
