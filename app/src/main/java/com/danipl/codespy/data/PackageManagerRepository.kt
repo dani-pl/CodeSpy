@@ -14,9 +14,9 @@ class PackageManagerRepository @Inject constructor(
 
     private val classifiedApps = mutableMapOf(
         Framework.REACT_NATIVE to mutableListOf<AppInfo>(),
-        Framework.CORDOVA to mutableListOf<AppInfo>(),
-        Framework.FLUTTER to mutableListOf<AppInfo>(),
-        Framework.UNCLASSIFIED to mutableListOf<AppInfo>()
+        Framework.CORDOVA to mutableListOf(),
+        Framework.FLUTTER to mutableListOf(),
+        Framework.UNCLASSIFIED to mutableListOf()
     )
 
     init {
