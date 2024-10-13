@@ -4,9 +4,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -25,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -76,13 +79,19 @@ private fun HomeContent(
     flutterApps: List<AppInfo>,
     unclassifiedApps: List<AppInfo>
 ) {
+
+    val homeScreenSegmentedButtons = listOf(
+        SegmentedButton(R.string.seg_button_react_native, R.drawable.ic_react_native),
+        SegmentedButton(R.string.seg_button_flutter, R.drawable.ic_flutter),
+        SegmentedButton(R.string.seg_button_cordova, R.drawable.ic_cordova)
+    )
+
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         var selectedIndex by remember { mutableStateOf(0) }
-        val options = listOf("RN", "Cordova", "Flutter")
 
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -92,23 +101,34 @@ private fun HomeContent(
                     horizontal = 20.dp,
                     vertical = 10.dp)
             ) {
-                options.forEachIndexed { index, label ->
+                homeScreenSegmentedButtons.forEachIndexed { index, segButton ->
                     SegmentedButton(
-                        shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                        shape = SegmentedButtonDefaults.itemShape(
+                            index = index,
+                            count = homeScreenSegmentedButtons.size),
                         onClick = { selectedIndex = index },
                         selected = index == selectedIndex
                     ) {
-                        Text(text = label)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(text = stringResource(segButton.textResId))
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Image(
+                                painter = painterResource(segButton.iconResId),
+                                contentDescription = "",
+                                modifier = Modifier.size(20.dp))
+                        }
                     }
                 }
             }
         }
 
-        var listToShow = listOf<AppInfo>()
-        when(selectedIndex){
-            0 -> listToShow = listToShow + reactNativeApps
-            1 -> listToShow = listToShow + cordovaApps
-            2 -> listToShow = listToShow + flutterApps
+        val listToShow = when(selectedIndex) {
+            0 ->  reactNativeApps
+            1 ->  cordovaApps
+            2 ->  flutterApps
+            else -> unclassifiedApps
         }
 
         Column(

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Code Spy</string>
     <string name="home_screen_title">Frameworks used by your apps</string>
+    <string name="seg_button_react_native">RN</string>
+    <string name="seg_button_flutter">Flutter</string>
+    <string name="seg_button_cordova">Cordova</string>
 </resources>
