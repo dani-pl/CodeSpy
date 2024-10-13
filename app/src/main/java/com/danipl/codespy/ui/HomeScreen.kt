@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.danipl.codespy.R
 import com.danipl.codespy.domain.models.UserApp
-import com.google.accompanist.drawablepainter.rememberDrawablePainter
+import com.danipl.codespy.util.ui.LoadImageWithPlaceholderAndError
 
 @Composable
 internal fun HomeRoute(
@@ -139,11 +139,7 @@ private fun HomeContent(
                 ListItem(
                     headlineContent = { Text(text = it.name) },
                     leadingContent = {
-                        Image(
-                            painter = rememberDrawablePainter(drawable = it.icon),
-                            contentDescription = "",
-                            modifier = Modifier.size(40.dp)
-                        )
+                        LoadImageWithPlaceholderAndError(it.iconUri)
                     }
                 )
             }
