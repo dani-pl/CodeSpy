@@ -4,6 +4,7 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -66,6 +67,16 @@ dependencies {
     implementation(libs.accompanist.drawablepainter)
     implementation(libs.timber)
     implementation(libs.androidx.material3.android)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
+
+    // Coil
+    implementation(libs.coil)
+
+
     kapt(libs.hilt.android.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

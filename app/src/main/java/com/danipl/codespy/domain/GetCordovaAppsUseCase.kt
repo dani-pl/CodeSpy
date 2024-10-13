@@ -1,9 +1,8 @@
 package com.danipl.codespy.domain
 
-import com.danipl.codespy.data.Framework
 import com.danipl.codespy.data.PackageManagerRepository
-import com.danipl.codespy.domain.models.AppInfo
-import com.danipl.codespy.domain.models.toDomain
+import com.danipl.codespy.domain.models.toUserAppList
+import com.danipl.codespy.util.Framework
 import javax.inject.Inject
 
 /**
@@ -12,9 +11,7 @@ import javax.inject.Inject
 class GetCordovaAppsUseCase @Inject constructor(
     private val packageManagerRepository: PackageManagerRepository
 ) {
-    fun getCordovaApps(): List<AppInfo> {
-        return packageManagerRepository.getAppsByFramework(Framework.CORDOVA).map {
-            it.toDomain()
-        }
-    }
+    operator fun invoke() = packageManagerRepository
+        .getAppsByFramework(Framework.CORDOVA)
+        .toUserAppList()
 }

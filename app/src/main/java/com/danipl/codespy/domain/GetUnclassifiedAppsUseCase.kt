@@ -1,20 +1,17 @@
 package com.danipl.codespy.domain
 
-import com.danipl.codespy.data.Framework
 import com.danipl.codespy.data.PackageManagerRepository
-import com.danipl.codespy.domain.models.AppInfo
-import com.danipl.codespy.domain.models.toDomain
+import com.danipl.codespy.domain.models.toUserAppList
+import com.danipl.codespy.util.Framework
 import javax.inject.Inject
 
 /**
- * This use case fetches the apps that use react native in the user's phone.
+ * This use case fetches the apps in the user's phone whose frameworks could not been classified.
  */
 class GetUnclassifiedAppsUseCase @Inject constructor(
     private val packageManagerRepository: PackageManagerRepository
 ) {
-    fun getUnclassifiedApps(): List<AppInfo> {
-        return packageManagerRepository.getAppsByFramework(Framework.UNCLASSIFIED).map {
-            it.toDomain()
-        }
-    }
+    operator fun invoke() = packageManagerRepository
+        .getAppsByFramework(Framework.UNCLASSIFIED)
+        .toUserAppList()
 }

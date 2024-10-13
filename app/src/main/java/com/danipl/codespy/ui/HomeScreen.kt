@@ -11,8 +11,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
@@ -32,8 +36,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.danipl.codespy.R
-import com.danipl.codespy.domain.models.AppInfo
-import com.google.accompanist.drawablepainter.rememberDrawablePainter
+import com.danipl.codespy.domain.models.UserApp
+import com.danipl.codespy.util.ui.LoadImageWithPlaceholderAndError
 
 @Composable
 internal fun HomeRoute(
@@ -45,20 +49,41 @@ internal fun HomeRoute(
         reactNativeApps = state.reactNativeApps,
         cordovaApps = state.cordovaApps,
         flutterApps = state.flutterApps,
-        unclassifiedApps = state.unclassifiedApps
+        unclassifiedApps = state.unclassifiedApps,
+        classifyAndStoreUserApps = viewModel::classifyAndStoreUserApps
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeScreen(
-    reactNativeApps: List<AppInfo>,
-    cordovaApps: List<AppInfo>,
-    flutterApps: List<AppInfo>,
-    unclassifiedApps: List<AppInfo>
+    reactNativeApps: List<UserApp>,
+    cordovaApps: List<UserApp>,
+    flutterApps: List<UserApp>,
+    unclassifiedApps: List<UserApp>,
+    classifyAndStoreUserApps: () -> Unit
 ) {
     Scaffold(
-        topBar = { CenterAlignedTopAppBar(title = { Text(text = stringResource(id = R.string.home_screen_title)) }) }
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = stringResource(id = R.string.home_screen_title))
+                        Spacer(modifier = Modifier.width(8.dp))
+                        IconButton(
+                            onClick = classifyAndStoreUserApps
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.Refresh,
+                                contentDescription = "refresh"
+                            )
+                        }
+                    }
+                }
+            )
+        }
     ) { paddingValues ->
         HomeContent(
             modifier = Modifier.padding(paddingValues),
@@ -74,10 +99,10 @@ private fun HomeScreen(
 @Composable
 private fun HomeContent(
     modifier: Modifier,
-    reactNativeApps: List<AppInfo>,
-    cordovaApps: List<AppInfo>,
-    flutterApps: List<AppInfo>,
-    unclassifiedApps: List<AppInfo>
+    reactNativeApps: List<UserApp>,
+    cordovaApps: List<UserApp>,
+    flutterApps: List<UserApp>,
+    unclassifiedApps: List<UserApp>
 ) {
 
     val homeScreenSegmentedButtons = listOf(
@@ -139,11 +164,7 @@ private fun HomeContent(
                 ListItem(
                     headlineContent = { Text(text = it.name) },
                     leadingContent = {
-                        Image(
-                            painter = rememberDrawablePainter(drawable = it.icon),
-                            contentDescription = "",
-                            modifier = Modifier.size(40.dp)
-                        )
+                        LoadImageWithPlaceholderAndError(it.iconUri)
                     }
                 )
             }
