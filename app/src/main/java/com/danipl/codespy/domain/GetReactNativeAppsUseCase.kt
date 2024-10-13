@@ -10,5 +10,5 @@ import javax.inject.Inject
 class GetReactNativeAppsUseCase @Inject constructor(
     private val packageManagerRepository: PackageManagerRepository
 ) {
-    fun getReactNativeApps() = packageManagerRepository.getAppsByFramework(Framework.REACT_NATIVE)
+    operator fun invoke() = packageManagerRepository.getAppsByFramework(Framework.REACT_NATIVE)
 }

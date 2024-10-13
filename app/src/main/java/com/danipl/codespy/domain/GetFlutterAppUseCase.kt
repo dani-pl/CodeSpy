@@ -10,5 +10,5 @@ import javax.inject.Inject
 class GetFlutterAppsUseCase @Inject constructor(
     private val packageManagerRepository: PackageManagerRepository
 ) {
-    fun getFlutterApps() = packageManagerRepository.getAppsByFramework(Framework.FLUTTER)
+    operator fun invoke() = packageManagerRepository.getAppsByFramework(Framework.FLUTTER)
 }

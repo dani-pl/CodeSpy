@@ -19,10 +19,10 @@ class HomeViewModel @Inject constructor(
     getFlutterAppsUseCase: GetFlutterAppsUseCase
 ) : ViewModel() {
 
-    private val reactNativeApps = getReactNativeAppsUseCase.getReactNativeApps()
-    private val cordovaApps = getCordovaAppsUseCase.getCordovaApps()
-    private val flutterApps = getFlutterAppsUseCase.getFlutterApps()
-    private val unclassifiedApps = getUnclassifiedAppsUseCase.getUnclassifiedApps()
+    private val reactNativeApps = getReactNativeAppsUseCase()
+    private val cordovaApps = getCordovaAppsUseCase()
+    private val flutterApps = getFlutterAppsUseCase()
+    private val unclassifiedApps = getUnclassifiedAppsUseCase()
 
     private val _state = MutableStateFlow(
         HomeState(

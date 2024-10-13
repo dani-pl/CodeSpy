@@ -10,5 +10,5 @@ import javax.inject.Inject
 class GetCordovaAppsUseCase @Inject constructor(
     private val packageManagerRepository: PackageManagerRepository
 ) {
-    fun getCordovaApps() = packageManagerRepository.getAppsByFramework(Framework.CORDOVA)
+    operator fun invoke() = packageManagerRepository.getAppsByFramework(Framework.CORDOVA)
 }

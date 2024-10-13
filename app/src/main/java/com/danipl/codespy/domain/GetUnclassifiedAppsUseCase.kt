@@ -10,5 +10,5 @@ import javax.inject.Inject
 class GetUnclassifiedAppsUseCase @Inject constructor(
     private val packageManagerRepository: PackageManagerRepository
 ) {
-    fun getUnclassifiedApps() = packageManagerRepository.getAppsByFramework(Framework.UNCLASSIFIED)
+    operator fun invoke() = packageManagerRepository.getAppsByFramework(Framework.UNCLASSIFIED)
 }
