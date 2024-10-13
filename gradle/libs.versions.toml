@@ -15,6 +15,7 @@ timber = "5.0.1"
 material3Android = "1.2.0"
 room = "2.6.1"
 ksp = "2.0.0-1.0.22"
+coil = "3.0.0-rc01"
 
 [libraries]
 accompanist-drawablepainter = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "accompanistDrawablepainter" }
@@ -38,6 +39,7 @@ timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room"}
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room"}
+coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

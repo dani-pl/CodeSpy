@@ -21,6 +21,7 @@ class PackageManagerRepository @Inject constructor(
 
     init {
         classifyApps()
+
     }
 
     private fun classifyApps() {
