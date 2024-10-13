@@ -21,8 +21,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        lifecycle.addObserver(packageManagerRepository)
         setContent {
             CodeSpyTheme {
                 Surface(

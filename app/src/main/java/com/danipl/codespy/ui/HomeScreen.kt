@@ -11,8 +11,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
@@ -45,7 +49,8 @@ internal fun HomeRoute(
         reactNativeApps = state.reactNativeApps,
         cordovaApps = state.cordovaApps,
         flutterApps = state.flutterApps,
-        unclassifiedApps = state.unclassifiedApps
+        unclassifiedApps = state.unclassifiedApps,
+        classifyAndStoreUserApps = viewModel::classifyAndStoreUserApps
     )
 }
 
@@ -55,10 +60,30 @@ private fun HomeScreen(
     reactNativeApps: List<UserApp>,
     cordovaApps: List<UserApp>,
     flutterApps: List<UserApp>,
-    unclassifiedApps: List<UserApp>
+    unclassifiedApps: List<UserApp>,
+    classifyAndStoreUserApps: () -> Unit
 ) {
     Scaffold(
-        topBar = { CenterAlignedTopAppBar(title = { Text(text = stringResource(id = R.string.home_screen_title)) }) }
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = stringResource(id = R.string.home_screen_title))
+                        Spacer(modifier = Modifier.width(8.dp))
+                        IconButton(
+                            onClick = classifyAndStoreUserApps
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.Refresh,
+                                contentDescription = "refresh"
+                            )
+                        }
+                    }
+                }
+            )
+        }
     ) { paddingValues ->
         HomeContent(
             modifier = Modifier.padding(paddingValues),

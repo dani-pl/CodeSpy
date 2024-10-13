@@ -5,42 +5,28 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import androidx.core.graphics.drawable.toBitmap
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import com.danipl.codespy.data.db.AppDatabase
 import com.danipl.codespy.data.db.UserAppEntity
 import com.danipl.codespy.util.Framework
-import com.danipl.codespy.util.IoDispatcher
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
 
 class PackageManagerRepository @Inject constructor(
     @ApplicationContext private val appContext: Context,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val appDatabase: AppDatabase
-): DefaultLifecycleObserver {
+) {
 
 
     private val pm = appContext.packageManager
 
     private val classifiedApps = mutableListOf<UserAppEntity>()
 
-    override fun onCreate(owner: LifecycleOwner) {
-        super.onCreate(owner)
-        owner.lifecycleScope.launch {
-            withContext(ioDispatcher) {
-                classifyApps()
-                storeAppsInDb()
-            }
-        }
+    fun classifyAndStoreApps() {
+        classifyApps()
+        storeAppsInDb()
     }
-
 
     private fun classifyApps() {
         pm.getInstalledApplications(0).forEach { appInfo ->

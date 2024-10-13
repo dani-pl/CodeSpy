@@ -2,7 +2,7 @@ package com.danipl.codespy.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.danipl.codespy.domain.ClassifyAndStoreUserAppsUseCase
 import com.danipl.codespy.domain.GetCordovaAppsUseCase
 import com.danipl.codespy.domain.GetFlutterAppsUseCase
 import com.danipl.codespy.domain.GetReactNativeAppsUseCase
@@ -20,10 +20,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    getReactNativeAppsUseCase: GetReactNativeAppsUseCase,
-    getCordovaAppsUseCase: GetCordovaAppsUseCase,
-    getUnclassifiedAppsUseCase: GetUnclassifiedAppsUseCase,
-    getFlutterAppsUseCase: GetFlutterAppsUseCase,
+    private val getReactNativeAppsUseCase: GetReactNativeAppsUseCase,
+    private val getCordovaAppsUseCase: GetCordovaAppsUseCase,
+    private val getUnclassifiedAppsUseCase: GetUnclassifiedAppsUseCase,
+    private val getFlutterAppsUseCase: GetFlutterAppsUseCase,
+    private val classifyAndStoreUserAppsUseCase: ClassifyAndStoreUserAppsUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -41,6 +42,23 @@ class HomeViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             withContext(ioDispatcher) {
+                _state.update {
+                    HomeState(
+                        reactNativeApps = getReactNativeAppsUseCase(),
+                        cordovaApps = getCordovaAppsUseCase(),
+                        flutterApps = getFlutterAppsUseCase(),
+                        unclassifiedApps = getUnclassifiedAppsUseCase()
+                    )
+                }
+            }
+        }
+    }
+
+
+    fun classifyAndStoreUserApps() {
+        viewModelScope.launch {
+            withContext(ioDispatcher) {
+                classifyAndStoreUserAppsUseCase()
                 _state.update {
                     HomeState(
                         reactNativeApps = getReactNativeAppsUseCase(),
