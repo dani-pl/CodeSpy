@@ -1,7 +1,7 @@
 package com.danipl.codespy.domain
 
-import com.danipl.codespy.data.Framework
 import com.danipl.codespy.data.PackageManagerRepository
+import com.danipl.codespy.util.Framework
 import javax.inject.Inject
 
 /**

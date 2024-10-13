@@ -2,6 +2,7 @@ package com.danipl.codespy.data
 
 import android.content.Context
 import com.danipl.codespy.domain.models.UserApp
+import com.danipl.codespy.util.Framework
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -36,7 +37,8 @@ class PackageManagerRepository @Inject constructor(
                 UserApp(
                     name = it.loadLabel(pm).toString(),
                     icon = it.loadIcon(pm),
-                    packageName = it.packageName
+                    packageName = it.packageName,
+                    framework = appFramework
                 )
             )
         }
@@ -70,8 +72,4 @@ class PackageManagerRepository @Inject constructor(
             ?.contains("AssetManifest.json") ?: false
     }
 
-}
-
-enum class Framework {
-    REACT_NATIVE, CORDOVA, FLUTTER, UNCLASSIFIED
 }
