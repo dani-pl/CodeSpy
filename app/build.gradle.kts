@@ -67,6 +67,13 @@ dependencies {
     implementation(libs.accompanist.drawablepainter)
     implementation(libs.timber)
     implementation(libs.androidx.material3.android)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
+
+
     kapt(libs.hilt.android.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
