@@ -1,7 +1,7 @@
 package com.danipl.codespy.data
 
 import android.content.Context
-import com.danipl.codespy.data.models.AppInfoDataModel
+import com.danipl.codespy.domain.models.AppInfo
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -13,10 +13,10 @@ class PackageManagerRepository @Inject constructor(
     private val pm = appContext.packageManager
 
     private val classifiedApps = mutableMapOf(
-        Framework.REACT_NATIVE to mutableListOf<AppInfoDataModel>(),
-        Framework.CORDOVA to mutableListOf<AppInfoDataModel>(),
-        Framework.FLUTTER to mutableListOf<AppInfoDataModel>(),
-        Framework.UNCLASSIFIED to mutableListOf<AppInfoDataModel>()
+        Framework.REACT_NATIVE to mutableListOf<AppInfo>(),
+        Framework.CORDOVA to mutableListOf<AppInfo>(),
+        Framework.FLUTTER to mutableListOf<AppInfo>(),
+        Framework.UNCLASSIFIED to mutableListOf<AppInfo>()
     )
 
     init {
@@ -32,7 +32,7 @@ class PackageManagerRepository @Inject constructor(
                 isFlutterApp(it.packageName) -> appFramework = Framework.FLUTTER
             }
             classifiedApps[appFramework]?.add(
-                AppInfoDataModel(
+                AppInfo(
                     name = it.loadLabel(pm).toString(),
                     icon = it.loadIcon(pm),
                     packageName = it.packageName
@@ -41,7 +41,7 @@ class PackageManagerRepository @Inject constructor(
         }
     }
 
-    fun getAppsByFramework(framework: Framework): List<AppInfoDataModel>{
+    fun getAppsByFramework(framework: Framework): List<AppInfo>{
         return classifiedApps[framework]?.toList() ?: listOf()
     }
 
