@@ -5,7 +5,7 @@ import com.danipl.codespy.domain.GetCordovaAppsUseCase
 import com.danipl.codespy.domain.GetFlutterAppsUseCase
 import com.danipl.codespy.domain.GetReactNativeAppsUseCase
 import com.danipl.codespy.domain.GetUnclassifiedAppsUseCase
-import com.danipl.codespy.domain.models.AppInfo
+import com.danipl.codespy.domain.models.UserApp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,8 +36,8 @@ class HomeViewModel @Inject constructor(
 }
 
 data class HomeState(
-    val reactNativeApps: List<AppInfo>,
-    val cordovaApps: List<AppInfo>,
-    val flutterApps: List<AppInfo>,
-    val unclassifiedApps: List<AppInfo>
+    val reactNativeApps: List<UserApp>,
+    val cordovaApps: List<UserApp>,
+    val flutterApps: List<UserApp>,
+    val unclassifiedApps: List<UserApp>
 )

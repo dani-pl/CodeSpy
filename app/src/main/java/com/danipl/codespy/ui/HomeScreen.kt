@@ -32,7 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.danipl.codespy.R
-import com.danipl.codespy.domain.models.AppInfo
+import com.danipl.codespy.domain.models.UserApp
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 
 @Composable
@@ -52,10 +52,10 @@ internal fun HomeRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeScreen(
-    reactNativeApps: List<AppInfo>,
-    cordovaApps: List<AppInfo>,
-    flutterApps: List<AppInfo>,
-    unclassifiedApps: List<AppInfo>
+    reactNativeApps: List<UserApp>,
+    cordovaApps: List<UserApp>,
+    flutterApps: List<UserApp>,
+    unclassifiedApps: List<UserApp>
 ) {
     Scaffold(
         topBar = { CenterAlignedTopAppBar(title = { Text(text = stringResource(id = R.string.home_screen_title)) }) }
@@ -74,10 +74,10 @@ private fun HomeScreen(
 @Composable
 private fun HomeContent(
     modifier: Modifier,
-    reactNativeApps: List<AppInfo>,
-    cordovaApps: List<AppInfo>,
-    flutterApps: List<AppInfo>,
-    unclassifiedApps: List<AppInfo>
+    reactNativeApps: List<UserApp>,
+    cordovaApps: List<UserApp>,
+    flutterApps: List<UserApp>,
+    unclassifiedApps: List<UserApp>
 ) {
 
     val homeScreenSegmentedButtons = listOf(
