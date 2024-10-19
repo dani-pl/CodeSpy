@@ -17,6 +17,7 @@ room = "2.6.1"
 ksp = "2.0.0-1.0.22"
 coil = "3.0.0-rc01"
 kotlinSerialization = "1.7.1"
+androidxNavigationCompose = "2.8.3"
 
 [libraries]
 accompanist-drawablepainter = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "accompanistDrawablepainter" }
@@ -42,6 +43,7 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room"}
 coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil"}
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerialization"}
+androidx-navigation-compose =  { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigationCompose" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
