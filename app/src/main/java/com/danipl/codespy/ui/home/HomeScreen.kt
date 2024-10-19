@@ -22,6 +22,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -33,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.danipl.codespy.R
@@ -49,9 +51,7 @@ internal fun HomeRoute(
     HomeScreen(
         reactNativeApps = state.reactNativeApps,
         cordovaApps = state.cordovaApps,
-        flutterApps = state.flutterApps,
-        unclassifiedApps = state.unclassifiedApps,
-        classifyAndStoreUserApps = viewModel::classifyAndStoreUserApps
+        flutterApps = state.flutterApps
     )
 }
 
@@ -60,9 +60,7 @@ internal fun HomeRoute(
 private fun HomeScreen(
     reactNativeApps: List<UserApp>,
     cordovaApps: List<UserApp>,
-    flutterApps: List<UserApp>,
-    unclassifiedApps: List<UserApp>,
-    classifyAndStoreUserApps: () -> Unit
+    flutterApps: List<UserApp>
 ) {
     Scaffold(
         topBar = {
@@ -74,7 +72,7 @@ private fun HomeScreen(
                         Text(text = stringResource(id = R.string.home_screen_title))
                         Spacer(modifier = Modifier.width(8.dp))
                         IconButton(
-                            onClick = classifyAndStoreUserApps
+                            onClick = {}
                         ) {
                             Icon(
                                 imageVector = Icons.Rounded.Refresh,
@@ -90,20 +88,17 @@ private fun HomeScreen(
             modifier = Modifier.padding(paddingValues),
             reactNativeApps = reactNativeApps,
             cordovaApps = cordovaApps,
-            flutterApps = flutterApps,
-            unclassifiedApps = unclassifiedApps
+            flutterApps = flutterApps
         )
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeContent(
     modifier: Modifier,
     reactNativeApps: List<UserApp>,
     cordovaApps: List<UserApp>,
-    flutterApps: List<UserApp>,
-    unclassifiedApps: List<UserApp>
+    flutterApps: List<UserApp>
 ) {
 
     val homeScreenSegmentedButtons = listOf(
@@ -150,12 +145,12 @@ private fun HomeContent(
             }
         }
 
-        val listToShow = when(selectedIndex) {
-            0 ->  reactNativeApps
-            1 ->  flutterApps
-            2 ->  cordovaApps
-            else -> unclassifiedApps
-        }
+    val listToShow = when(selectedIndex) {
+        0 ->  reactNativeApps
+        1 ->  flutterApps
+        2 ->  cordovaApps
+        else -> listOf()
+    }
 
         Column(
             modifier = Modifier

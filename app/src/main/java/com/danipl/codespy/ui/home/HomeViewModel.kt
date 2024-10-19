@@ -75,6 +75,5 @@ class HomeViewModel @Inject constructor(
 data class HomeState(
     val reactNativeApps: List<UserApp>,
     val cordovaApps: List<UserApp>,
-    val flutterApps: List<UserApp>,
-    val unclassifiedApps: List<UserApp>
+    val flutterApps: List<UserApp>
 )
