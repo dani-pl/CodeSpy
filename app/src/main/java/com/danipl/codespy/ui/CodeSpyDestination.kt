@@ -18,15 +18,15 @@ fun CodeSpyNavigation(
 
     NavHost(
         navController = navController,
-        startDestination = CodeSpyNavigation.Onboarding
+        startDestination = CodeSpyDestination.Onboarding
     ) {
-        composable<CodeSpyNavigation.Onboarding> {
+        composable<CodeSpyDestination.Onboarding> {
             OnboardingRoute(
-                navigateToHomeScreen = { navController.navigate(CodeSpyNavigation.Home) },
+                navigateToHomeScreen = { navController.navigate(CodeSpyDestination.Home) },
                 viewModel = hiltViewModel()
             )
         }
-        composable<CodeSpyNavigation.Home> {
+        composable<CodeSpyDestination.Home> {
             HomeRoute(
                 viewModel = hiltViewModel()
             )
@@ -36,7 +36,7 @@ fun CodeSpyNavigation(
 }
 
 @Serializable
-sealed class CodeSpyNavigation {
+sealed class CodeSpyDestination {
 
     @Serializable
     data object Onboarding
