@@ -12,7 +12,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class PackageManagerRepository @Inject constructor(
     @ApplicationContext private val appContext: Context,
     private val appDatabase: AppDatabase
@@ -21,12 +23,20 @@ class PackageManagerRepository @Inject constructor(
 
     private val pm = appContext.packageManager
 
-    private val classifiedApps = mutableListOf<UserAppEntity>()
+    private val classifiedApps = mapOf(
+        Framework.REACT_NATIVE to mutableListOf<UserAppEntity>(),
+        Framework.FLUTTER to mutableListOf(),
+        Framework.CORDOVA to mutableListOf()
+    )
 
-    fun classifyAndStoreApps() {
-        classifyApps()
-        storeAppsInDb()
-    }
+    fun classifyAndStoreApps(): PackageManagerResult  =
+        try {
+            classifyApps()
+            storeAppsInDb()
+            PackageManagerResult.Success
+        } catch (e: Exception) {
+            PackageManagerResult.Error
+        }
 
     private fun classifyApps() {
         pm.getInstalledApplications(0).forEach { appInfo ->
@@ -40,7 +50,7 @@ class PackageManagerRepository @Inject constructor(
 
 
             appFramework?.let {
-                classifiedApps.add(
+                classifiedApps[appFramework]?.add(
                     UserAppEntity(
                         name = appInfo.loadLabel(pm).toString(),
                         iconUri = getAppIconUriFromDrawable(
@@ -56,7 +66,7 @@ class PackageManagerRepository @Inject constructor(
     }
 
     private fun storeAppsInDb() {
-        appDatabase.userAppEntityDao().insertAll(*classifiedApps.toTypedArray())
+        appDatabase.userAppEntityDao().insertAll(*classifiedApps.flatMap { it.value}.toTypedArray())
     }
 
     private fun getAppIconUriFromDrawable(appId: String, drawable: Drawable): Uri {
@@ -69,10 +79,14 @@ class PackageManagerRepository @Inject constructor(
     }
 
 
-    fun getAppsByFramework(framework: Framework): List<UserAppEntity> {
-        val result = appDatabase.userAppEntityDao().loadAllByFramework(framework.toString())
-        return result
-    }
+    fun getAppsByFramework(framework: Framework, forceReadFromDb: Boolean = false) =
+        if(!classifiedApps[framework].isNullOrEmpty() && !forceReadFromDb){
+            // Return cached list
+            classifiedApps[framework] ?: listOf<UserAppEntity>()
+        } else {
+            // Read list from database
+            appDatabase.userAppEntityDao().loadAllByFramework(framework.toString())
+        }
 
     private fun isReactNativeApp(packageName: String): Boolean {
         return pm
@@ -98,4 +112,12 @@ class PackageManagerRepository @Inject constructor(
             ?.contains("AssetManifest.json") ?: false
     }
 
+}
+
+sealed class PackageManagerResult {
+
+    data object Success: PackageManagerResult()
+
+
+    data object Error: PackageManagerResult()
 }
