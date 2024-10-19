@@ -1,4 +1,4 @@
-package com.danipl.codespy.ui
+package com.danipl.codespy.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.danipl.codespy.R
 import com.danipl.codespy.domain.models.UserApp
+import com.danipl.codespy.ui.SegmentedButton
 import com.danipl.codespy.util.ui.LoadImageWithPlaceholderAndError
 
 @Composable

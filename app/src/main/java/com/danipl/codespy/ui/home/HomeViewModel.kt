@@ -1,4 +1,4 @@
-package com.danipl.codespy.ui
+package com.danipl.codespy.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
