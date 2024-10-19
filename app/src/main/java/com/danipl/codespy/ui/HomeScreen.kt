@@ -151,8 +151,8 @@ private fun HomeContent(
 
         val listToShow = when(selectedIndex) {
             0 ->  reactNativeApps
-            1 ->  cordovaApps
-            2 ->  flutterApps
+            1 ->  flutterApps
+            2 ->  cordovaApps
             else -> unclassifiedApps
         }
 
