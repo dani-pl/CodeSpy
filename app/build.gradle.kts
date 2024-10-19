@@ -5,6 +5,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -75,6 +76,9 @@ dependencies {
 
     // Coil
     implementation(libs.coil)
+
+    // Serialization
+    implementation(libs.kotlin.serialization)
 
 
     kapt(libs.hilt.android.compiler)
