@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.danipl.codespy.data.PackageManagerRepository
+import com.danipl.codespy.ui.CodeSpyNavigation
 import com.danipl.codespy.ui.home.HomeRoute
 import com.danipl.codespy.ui.theme.CodeSpyTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +28,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HomeRoute()
+                    CodeSpyNavigation()
                 }
             }
         }
