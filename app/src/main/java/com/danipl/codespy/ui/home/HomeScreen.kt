@@ -167,3 +167,15 @@ private fun HomeContent(
         }
     }
 }
+
+@Preview
+@Composable
+fun HomeScreenPreview() {
+    Surface { 
+        HomeScreen(
+            reactNativeApps = listOf(),
+            flutterApps = listOf(),
+            cordovaApps = listOf()
+        )
+    }
+}
