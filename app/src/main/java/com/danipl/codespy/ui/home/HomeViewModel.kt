@@ -6,7 +6,6 @@ import com.danipl.codespy.domain.ClassifyAndStoreUserAppsUseCase
 import com.danipl.codespy.domain.GetCordovaAppsUseCase
 import com.danipl.codespy.domain.GetFlutterAppsUseCase
 import com.danipl.codespy.domain.GetReactNativeAppsUseCase
-import com.danipl.codespy.domain.GetUnclassifiedAppsUseCase
 import com.danipl.codespy.domain.models.UserApp
 import com.danipl.codespy.util.IoDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,52 +21,46 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getReactNativeAppsUseCase: GetReactNativeAppsUseCase,
     private val getCordovaAppsUseCase: GetCordovaAppsUseCase,
-    private val getUnclassifiedAppsUseCase: GetUnclassifiedAppsUseCase,
     private val getFlutterAppsUseCase: GetFlutterAppsUseCase,
-    private val classifyAndStoreUserAppsUseCase: ClassifyAndStoreUserAppsUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
 
+
+    private var reactNativeApps = listOf<UserApp>()
+    private var flutterApps = listOf<UserApp>()
+    private var cordovaApps = listOf<UserApp>()
+
+
     private val _state = MutableStateFlow(
         HomeState(
-            reactNativeApps = listOf(),
+            reactNativeApps =  listOf(),
             cordovaApps = listOf(),
-            flutterApps = listOf(),
-            unclassifiedApps = listOf()
+            flutterApps =  listOf(),
         )
     )
     val state = _state.asStateFlow()
 
     init {
         viewModelScope.launch {
-            withContext(ioDispatcher) {
-                _state.update {
-                    HomeState(
-                        reactNativeApps = getReactNativeAppsUseCase(),
-                        cordovaApps = getCordovaAppsUseCase(),
-                        flutterApps = getFlutterAppsUseCase(),
-                        unclassifiedApps = getUnclassifiedAppsUseCase()
-                    )
-                }
-            }
+            populateListsOfAppsPerFramework()
         }
     }
 
 
-    fun classifyAndStoreUserApps() {
-        viewModelScope.launch {
-            withContext(ioDispatcher) {
-                classifyAndStoreUserAppsUseCase()
-                _state.update {
-                    HomeState(
-                        reactNativeApps = getReactNativeAppsUseCase(),
-                        cordovaApps = getCordovaAppsUseCase(),
-                        flutterApps = getFlutterAppsUseCase(),
-                        unclassifiedApps = getUnclassifiedAppsUseCase()
-                    )
-                }
-            }
+    private suspend fun populateListsOfAppsPerFramework() {
+        withContext(ioDispatcher) {
+            reactNativeApps = getReactNativeAppsUseCase()
+            flutterApps = getFlutterAppsUseCase()
+            cordovaApps = getCordovaAppsUseCase()
+        }
+
+        _state.update {
+            HomeState(
+                reactNativeApps = reactNativeApps,
+                flutterApps = flutterApps,
+                cordovaApps = cordovaApps
+            )
         }
     }
 }
