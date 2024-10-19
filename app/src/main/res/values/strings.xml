@@ -4,4 +4,6 @@
     <string name="seg_button_react_native">RN</string>
     <string name="seg_button_flutter">Flutter</string>
     <string name="seg_button_cordova">Cordova</string>
+    <string name="generic_error_msg_title">Something went wrong</string>
+    <string name="processing_user_apps_loading_mg">Classifying your apps based on their used frameworks</string>
 </resources>
