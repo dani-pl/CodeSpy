@@ -12,13 +12,15 @@ import kotlinx.serialization.Serializable
 
 @Composable
 fun CodeSpyNavigation(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    hasUserCompletedOnBoarding: Boolean = false
 ) {
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
-        startDestination = CodeSpyDestination.Onboarding
+        startDestination =
+        if(hasUserCompletedOnBoarding) CodeSpyDestination.Home else CodeSpyDestination.Onboarding
     ) {
         composable<CodeSpyDestination.Onboarding> {
             OnboardingRoute(
@@ -28,6 +30,7 @@ fun CodeSpyNavigation(
         }
         composable<CodeSpyDestination.Home> {
             HomeRoute(
+                navigateToOnBoarding = { navController.navigate(CodeSpyDestination.Onboarding) },
                 viewModel = hiltViewModel()
             )
         }
