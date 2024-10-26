@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.danipl.codespy.HAS_USER_COMPLETED_ONBOARDING
 import com.danipl.codespy.data.PackageManagerRepository
 import com.danipl.codespy.data.PackageManagerResult
+import com.danipl.codespy.util.IoDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +24,8 @@ import javax.inject.Inject
 @HiltViewModel
 class OnBoardingViewModel @Inject constructor(
     private val packageManagerRepository: PackageManagerRepository,
-    private val dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences>,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
 
     private val _state = MutableStateFlow<OnBoardingState.UiState>(OnBoardingState.UiState.ShowInstructions)
@@ -34,14 +37,8 @@ class OnBoardingViewModel @Inject constructor(
     fun onOnboardingFinished() {
         _state.update { OnBoardingState.UiState.Loading }
 
-        var packageManagerResult: PackageManagerResult = PackageManagerResult.Error
-
-        viewModelScope.launch {
-            packageManagerResult = withContext(Dispatchers.IO) {
-                packageManagerRepository.classifyAndStoreApps()
-            }
-        }.invokeOnCompletion {
-            when(packageManagerResult) {
+        viewModelScope.launch(ioDispatcher) {
+            when (packageManagerRepository.classifyAndStoreApps()) {
                 PackageManagerResult.Success -> {
                     viewModelScope.launch {
                         _events.emit(OnBoardingState.Event.OnClassifyAndStoreAppsFinished)
@@ -50,11 +47,11 @@ class OnBoardingViewModel @Inject constructor(
                         }
                     }
                 }
+
                 PackageManagerResult.Error -> _state.update { OnBoardingState.UiState.Error }
             }
         }
     }
-
 }
 
 sealed class OnBoardingState {
