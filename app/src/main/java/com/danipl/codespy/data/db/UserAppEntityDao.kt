@@ -12,8 +12,4 @@ interface UserAppEntityDao {
 
     @Insert
     fun insertAll(userAppEntities: List<UserAppEntity>)
-
-    // New function to delete all entries in the table
-    @Query("DELETE FROM userappentity")
-    fun deleteAll()
 }

@@ -90,7 +90,7 @@ class PackageManagerRepository @Inject constructor(
 
     fun deleteAllApps(): PackageManagerResult =
         try {
-            appDatabase.userAppEntityDao().deleteAll()
+            appDatabase.clearAllTables()
             PackageManagerResult.Success
         } catch (e: Exception) {
             PackageManagerResult.Error
