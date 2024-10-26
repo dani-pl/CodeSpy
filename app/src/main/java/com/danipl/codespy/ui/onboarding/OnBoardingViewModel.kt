@@ -1,7 +1,11 @@
 package com.danipl.codespy.ui.onboarding
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.danipl.codespy.HAS_USER_COMPLETED_ONBOARDING
 import com.danipl.codespy.data.PackageManagerRepository
 import com.danipl.codespy.data.PackageManagerResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,23 +21,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OnBoardingViewModel @Inject constructor(
-    private val packageManagerRepository: PackageManagerRepository
+    private val packageManagerRepository: PackageManagerRepository,
+    private val dataStore: DataStore<Preferences>
 ): ViewModel() {
 
-    private val _state = MutableStateFlow<OnBoardingState.UiState>(OnBoardingState.UiState.ShowInstructions(pageNumber = 0))
+    private val _state = MutableStateFlow<OnBoardingState.UiState>(OnBoardingState.UiState.ShowInstructions)
     val state = _state.asStateFlow()
 
     private var _events: MutableSharedFlow<OnBoardingState.Event> = MutableSharedFlow()
     val events = _events.asSharedFlow()
-
-    fun onNextClicked() {
-
-    }
-
-    fun onPreviousClicked() {
-
-
-    }
 
     fun onOnboardingFinished() {
         _state.update { OnBoardingState.UiState.Loading }
@@ -49,6 +45,9 @@ class OnBoardingViewModel @Inject constructor(
                 PackageManagerResult.Success -> {
                     viewModelScope.launch {
                         _events.emit(OnBoardingState.Event.OnClassifyAndStoreAppsFinished)
+                        dataStore.edit { preferences ->
+                            preferences[HAS_USER_COMPLETED_ONBOARDING] = true
+                        }
                     }
                 }
                 PackageManagerResult.Error -> _state.update { OnBoardingState.UiState.Error }
@@ -61,7 +60,7 @@ class OnBoardingViewModel @Inject constructor(
 sealed class OnBoardingState {
 
     sealed class UiState {
-        data class ShowInstructions(val pageNumber: Int): UiState()
+        data object ShowInstructions: UiState()
         data object Error: UiState()
         data object Loading: UiState()
     }
