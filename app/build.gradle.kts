@@ -1,3 +1,5 @@
+import com.google.firebase.appdistribution.gradle.AppDistributionExtension
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -6,6 +8,8 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.firebase.google.services)
+    alias(libs.plugins.firebase.appdistribution)
 }
 
 android {
@@ -26,12 +30,29 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
             isMinifyEnabled = false
+            isShrinkResources = false
+            applicationIdSuffix = ".debug"
+            signingConfig = signingConfigs.getByName("debug")
+        }
+
+        release {
+            isDebuggable = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+
+            signingConfig = signingConfigs.getByName("debug")
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard_release.pro"
             )
+
+            configure<AppDistributionExtension> {
+                groups = "internal-testers"
+                releaseNotesFile = findProperty("releaseNotesFile")?.toString().orEmpty()
+            }
         }
     }
     compileOptions {
@@ -85,6 +106,10 @@ dependencies {
 
     // Data Store
     implementation(libs.data.store)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
 
 
     kapt(libs.hilt.android.compiler)
