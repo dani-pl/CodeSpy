@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "626520735994",
+    "project_id": "codespy-c341d",
+    "storage_bucket": "codespy-c341d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626520735994:android:c7ed4dc76e1a682e9bc943",
+        "android_client_info": {
+          "package_name": "com.danipl.codespy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyr965X4eZLgA_H48gF3vbFgJGyeS-1UI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626520735994:android:84837209598d43c89bc943",
+        "android_client_info": {
+          "package_name": "com.danipl.codespy.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyr965X4eZLgA_H48gF3vbFgJGyeS-1UI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

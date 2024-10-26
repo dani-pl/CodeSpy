@@ -5,4 +5,6 @@ plugins {
     alias(libs.plugins.hiltAndroid) apply false
     alias(libs.plugins.composeCompiler) apply false
     alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.firebase.google.services) apply false
+    alias(libs.plugins.firebase.appdistribution) apply false
 }
