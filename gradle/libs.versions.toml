@@ -2,7 +2,7 @@
 accompanistDrawablepainter = "0.30.1"
 agp = "8.7.0-alpha08"
 hiltAndroid = "2.51.1"
-hiltNavigationFragment = "1.1.0"
+hiltNavigationFragment = "1.2.0"
 kotlin = "2.0.0"
 coreKtx = "1.12.0"
 junit = "4.13.2"
@@ -10,12 +10,15 @@ junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 lifecycleRuntimeKtx = "2.7.0"
 activityCompose = "1.8.2"
-composeBom = "2023.08.00"
+composeBom = "2024.10.00"
 timber = "5.0.1"
 material3Android = "1.2.0"
 room = "2.6.1"
 ksp = "2.0.0-1.0.22"
 coil = "3.0.0-rc01"
+kotlinSerialization = "1.7.1"
+androidxNavigationCompose = "2.8.3"
+dataStore = "1.1.1"
 
 [libraries]
 accompanist-drawablepainter = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "accompanistDrawablepainter" }
@@ -40,6 +43,9 @@ androidx-material3-android = { group = "androidx.compose.material3", name = "mat
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room"}
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room"}
 coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil"}
+kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerialization"}
+androidx-navigation-compose =  { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigationCompose" }
+data-store = { module = "androidx.datastore:datastore-preferences", version.ref = "dataStore"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -47,3 +53,4 @@ jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "k
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}

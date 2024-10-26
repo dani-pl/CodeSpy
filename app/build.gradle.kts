@@ -5,6 +5,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -75,6 +76,15 @@ dependencies {
 
     // Coil
     implementation(libs.coil)
+
+    // Serialization
+    implementation(libs.kotlin.serialization)
+
+    // Compose Navigation
+    implementation(libs.androidx.navigation.compose)
+
+    // Data Store
+    implementation(libs.data.store)
 
 
     kapt(libs.hilt.android.compiler)

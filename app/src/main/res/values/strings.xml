@@ -1,7 +1,19 @@
 <resources>
     <string name="app_name">Code Spy</string>
-    <string name="home_screen_title">Frameworks used by your apps</string>
+    <string name="home_screen_title">CodeSpy</string>
     <string name="seg_button_react_native">RN</string>
     <string name="seg_button_flutter">Flutter</string>
     <string name="seg_button_cordova">Cordova</string>
+    <string name="generic_error_msg_title">Something went wrong</string>
+    <string name="scanning_apps">Scanning apps…</string>
+    <string name="loading_content">Loading content</string>
+    <string name="deleting_app_lists">Deleting app lists</string>
+    <string name="onboarding_page1_title">Welcome to CodeSpy!</string>
+    <string name="onboarding_page1_subtitle">Want to learn about the frameworks your apps use? Swipe right or click the arrow to see how CodeSpy can help you</string>
+    <string name="onboarding_page2_title">How it works</string>
+    <string name="onboarding_page2_subtitle">With your permission, CodeSpy will scan all the apps on your device to identify the frameworks they use. Rest assured, this process takes place entirely on your device</string>
+    <string name="onboarding_page3_title">Click Start scanning to begin!</string>
+    <string name="onboarding_page3_subtitle">Still have questions? This app is open source! You can check the code to see how it works or even compile it yourself.</string>
+    <string name="code_repository_url"><a href="https://github.com/dani-pl/CodeSpy">https://github.com/dani-pl/CodeSpy</a></string>
+    <string name="start_scanning">Start scanning</string>
 </resources>
