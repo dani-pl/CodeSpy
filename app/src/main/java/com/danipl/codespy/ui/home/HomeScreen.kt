@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,6 +26,7 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,20 +41,46 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.danipl.codespy.R
 import com.danipl.codespy.domain.models.UserApp
+import com.danipl.codespy.ui.LoadingScreen
 import com.danipl.codespy.ui.SegmentedButton
 import com.danipl.codespy.util.ui.LoadImageWithPlaceholderAndError
 
 @Composable
 internal fun HomeRoute(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    navigateToOnBoarding: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
-    HomeScreen(
-        reactNativeApps = state.reactNativeApps,
-        cordovaApps = state.cordovaApps,
-        flutterApps = state.flutterApps
-    )
+    LaunchedEffect(Unit) {
+        viewModel.events.collect {
+            if(it is HomeState.Event.AppsDeletedSuccessfully) navigateToOnBoarding()
+        }
+    }
+
+    when(val uiState = state) {
+        is HomeState.Success -> {
+            HomeScreen(
+                reactNativeApps = uiState.reactNativeApps,
+                cordovaApps = uiState.cordovaApps,
+                flutterApps = uiState.flutterApps,
+                refreshAppLists = viewModel::refreshAppLists,
+                deleteAppLists = viewModel::deleteAppLists
+            )
+        }
+        is HomeState.Loading -> {
+            LoadingScreen(
+                message = stringResource(id = when(uiState) {
+                    HomeState.Loading.ScanningApps -> R.string.scanning_apps
+                    HomeState.Loading.ReadingFromDatabase -> R.string.loading_content
+                    HomeState.Loading.DeletingApps -> R.string.deleting_app_lists
+                })
+            )
+        }
+        is HomeState.Error -> {}
+    }
+
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,7 +88,9 @@ internal fun HomeRoute(
 private fun HomeScreen(
     reactNativeApps: List<UserApp>,
     cordovaApps: List<UserApp>,
-    flutterApps: List<UserApp>
+    flutterApps: List<UserApp>,
+    refreshAppLists: () -> Unit,
+    deleteAppLists: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -70,15 +100,27 @@ private fun HomeScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(text = stringResource(id = R.string.home_screen_title))
-                        Spacer(modifier = Modifier.width(8.dp))
-                        IconButton(
-                            onClick = {}
-                        ) {
-                            Icon(
-                                imageVector = Icons.Rounded.Refresh,
-                                contentDescription = "refresh"
-                            )
-                        }
+                    }
+                },
+                actions = {
+                    IconButton(
+                        onClick = refreshAppLists
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Refresh,
+                            contentDescription = "refresh"
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(8.dp))
+
+                    IconButton(
+                        onClick = deleteAppLists
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Delete,
+                            contentDescription = "delete"
+                        )
                     }
                 }
             )
@@ -175,7 +217,9 @@ fun HomeScreenPreview() {
         HomeScreen(
             reactNativeApps = listOf(),
             flutterApps = listOf(),
-            cordovaApps = listOf()
+            cordovaApps = listOf(),
+            refreshAppLists = {},
+            deleteAppLists = {}
         )
     }
 }
