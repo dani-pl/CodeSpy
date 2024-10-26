@@ -98,6 +98,7 @@ class PackageManagerRepository @Inject constructor(
             }
             PackageManagerResult.Success
         } catch (e: Exception) {
+            Timber.e("Error in deleteAllApps(). Exception: $e")
             PackageManagerResult.Error
         }
 
