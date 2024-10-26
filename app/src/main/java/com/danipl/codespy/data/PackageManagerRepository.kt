@@ -9,6 +9,7 @@ import com.danipl.codespy.data.db.AppDatabase
 import com.danipl.codespy.data.db.UserAppEntity
 import com.danipl.codespy.util.Framework
 import dagger.hilt.android.qualifiers.ApplicationContext
+import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
@@ -35,6 +36,7 @@ class PackageManagerRepository @Inject constructor(
             storeAppsInDb()
             PackageManagerResult.Success
         } catch (e: Exception) {
+            Timber.e("Error in classifyAndStoreApps(). Exception = $e")
             PackageManagerResult.Error
         }
 
