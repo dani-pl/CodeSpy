@@ -1,7 +1,6 @@
 package com.danipl.codespy.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,13 +11,14 @@ import kotlinx.serialization.Serializable
 
 @Composable
 fun CodeSpyNavigation(
-    modifier: Modifier = Modifier
+    hasUserCompletedOnBoarding: Boolean = false
 ) {
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
-        startDestination = CodeSpyDestination.Onboarding
+        startDestination =
+        if(hasUserCompletedOnBoarding) CodeSpyDestination.Home else CodeSpyDestination.Onboarding
     ) {
         composable<CodeSpyDestination.Onboarding> {
             OnboardingRoute(
@@ -28,6 +28,7 @@ fun CodeSpyNavigation(
         }
         composable<CodeSpyDestination.Home> {
             HomeRoute(
+                navigateToOnBoarding = { navController.navigate(CodeSpyDestination.Onboarding) },
                 viewModel = hiltViewModel()
             )
         }
