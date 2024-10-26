@@ -20,6 +20,8 @@ import javax.inject.Singleton
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "preferences")
 
+val HAS_USER_COMPLETED_ONBOARDING = booleanPreferencesKey("has_user_completed_onboarding")
+
 @InstallIn(SingletonComponent::class)
 @EntryPoint
 interface AppComponent {
