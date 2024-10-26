@@ -12,4 +12,8 @@ interface UserAppEntityDao {
 
     @Insert
     fun insertAll(vararg userAppEntities: UserAppEntity)
+
+    // New function to delete all entries in the table
+    @Query("DELETE FROM userappentity")
+    fun deleteAll()
 }

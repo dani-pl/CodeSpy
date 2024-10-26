@@ -88,6 +88,14 @@ class PackageManagerRepository @Inject constructor(
             appDatabase.userAppEntityDao().loadAllByFramework(framework.toString())
         }
 
+    fun deleteAllApps(): PackageManagerResult =
+        try {
+            appDatabase.userAppEntityDao().deleteAll()
+            PackageManagerResult.Success
+        } catch (e: Exception) {
+            PackageManagerResult.Error
+        }
+
     private fun isReactNativeApp(packageName: String): Boolean {
         return pm
                 .getResourcesForApplication(packageName)
