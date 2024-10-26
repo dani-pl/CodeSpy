@@ -83,6 +83,9 @@ dependencies {
     // Compose Navigation
     implementation(libs.androidx.navigation.compose)
 
+    // Data Store
+    implementation(libs.data.store)
+
 
     kapt(libs.hilt.android.compiler)
     testImplementation(libs.junit)

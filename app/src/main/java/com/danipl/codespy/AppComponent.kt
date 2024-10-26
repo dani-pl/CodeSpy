@@ -1,6 +1,10 @@
 package com.danipl.codespy
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
 import com.danipl.codespy.data.db.AppDatabase
 import com.danipl.codespy.util.IoDispatcher
@@ -14,6 +18,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "preferences")
 
 @InstallIn(SingletonComponent::class)
 @EntryPoint
@@ -39,4 +44,10 @@ object AppModule {
     @Provides
     @IoDispatcher
     fun providesIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+
+    @Provides
+    @Singleton
+    fun providesDataStore(
+        @ApplicationContext appContext: Context
+    ): DataStore<Preferences> = appContext.dataStore
 }
