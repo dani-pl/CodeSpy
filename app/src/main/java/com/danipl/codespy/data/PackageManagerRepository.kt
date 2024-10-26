@@ -93,6 +93,9 @@ class PackageManagerRepository @Inject constructor(
     fun deleteAllApps(): PackageManagerResult =
         try {
             appDatabase.clearAllTables()
+            classifiedApps.keys.forEach { framework ->
+                classifiedApps[framework]?.clear()
+            }
             PackageManagerResult.Success
         } catch (e: Exception) {
             PackageManagerResult.Error
