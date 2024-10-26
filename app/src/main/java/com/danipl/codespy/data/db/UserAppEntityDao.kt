@@ -11,7 +11,7 @@ interface UserAppEntityDao {
     fun loadAllByFramework(framework: String): List<UserAppEntity>
 
     @Insert
-    fun insertAll(vararg userAppEntities: UserAppEntity)
+    fun insertAll(userAppEntities: List<UserAppEntity>)
 
     // New function to delete all entries in the table
     @Query("DELETE FROM userappentity")

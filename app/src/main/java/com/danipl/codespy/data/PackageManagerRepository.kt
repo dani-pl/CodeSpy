@@ -66,7 +66,7 @@ class PackageManagerRepository @Inject constructor(
     }
 
     private fun storeAppsInDb() {
-        appDatabase.userAppEntityDao().insertAll(*classifiedApps.flatMap { it.value}.toTypedArray())
+        appDatabase.userAppEntityDao().insertAll(classifiedApps.flatMap { it.value })
     }
 
     private fun getAppIconUriFromDrawable(appId: String, drawable: Drawable): Uri {
