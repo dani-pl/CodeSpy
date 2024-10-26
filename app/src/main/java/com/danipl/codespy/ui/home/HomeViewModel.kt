@@ -74,12 +74,9 @@ class HomeViewModel @Inject constructor(
 
     fun refreshAppLists() {
         _state.update { HomeState.Loading.ScanningApps }
-        var packageManagerResult: PackageManagerResult = PackageManagerResult.Error
 
-        viewModelScope.launch {
-            packageManagerResult = withContext(ioDispatcher) { refreshAllAppListsUseCase()}
-        }.invokeOnCompletion {
-            when(packageManagerResult) {
+        viewModelScope.launch(ioDispatcher) {
+            when(refreshAllAppListsUseCase()) {
                 PackageManagerResult.Success -> {
                     viewModelScope.launch {
                         populateListsOfAppsPerFramework()
