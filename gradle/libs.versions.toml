@@ -19,6 +19,9 @@ coil = "3.0.0-rc01"
 kotlinSerialization = "1.7.1"
 androidxNavigationCompose = "2.8.3"
 dataStore = "1.1.1"
+firebaseGoogleServices = "4.4.2"
+firebaseBom = "33.5.1"
+firebaseAppDistribution = "5.0.0"
 
 [libraries]
 accompanist-drawablepainter = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "accompanistDrawablepainter" }
@@ -46,6 +49,8 @@ coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil"}
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerialization"}
 androidx-navigation-compose =  { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigationCompose" }
 data-store = { module = "androidx.datastore:datastore-preferences", version.ref = "dataStore"}
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom"}
+firebase-analytics = { module = "com.google.firebase:firebase-analytics"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -54,3 +59,5 @@ composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "k
 hiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
+firebase-google-services = { id = "com.google.gms.google-services", version.ref = "firebaseGoogleServices"}
+firebase-appdistribution = { id = "com.google.firebase.appdistribution", version.ref = "firebaseAppDistribution"}
