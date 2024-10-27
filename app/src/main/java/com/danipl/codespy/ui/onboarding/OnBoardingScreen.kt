@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
@@ -31,6 +33,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Blue
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.LinkAnnotation
@@ -41,6 +44,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.danipl.codespy.R
 import com.danipl.codespy.ui.LoadingScreen
 import com.danipl.codespy.ui.PagerIndicator
@@ -105,7 +109,7 @@ fun OnboardingContent(
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { 3 })
     val scrollScope = rememberCoroutineScope()
 
-    Box(
+    ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
             .padding(
@@ -115,9 +119,18 @@ fun OnboardingContent(
                 top = 50.dp
             )
     ) {
+        val (horizontalPager, pagerIndicatorAndNavigationArrows) = createRefs()
+
+
         HorizontalPager (
             state = pagerState,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxSize()
+                .constrainAs(horizontalPager) {
+                    centerHorizontallyTo(parent)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(pagerIndicatorAndNavigationArrows.top)
+                }
         ) { page: Int ->
 
             val title = stringResource( id = when(page){
@@ -140,19 +153,23 @@ fun OnboardingContent(
             }
 
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.Top
             ) {
 
-                Spacer(modifier = Modifier.height(100.dp))
+                val screenSize = LocalConfiguration.current.screenHeightDp
+
+                Spacer(modifier = Modifier.height((screenSize/5).dp))
 
                 Image(
-                    modifier = Modifier.requiredHeight(300.dp),
+                    modifier = Modifier
+                        .requiredHeight(300.dp)
+                        .padding(12.dp),
                     painter = painterResource(id = drawableResId),
                     contentDescription = ""
                 )
-
-
-                Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
                     text = title,
@@ -193,20 +210,24 @@ fun OnboardingContent(
             }
         }
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.align(Alignment.BottomCenter)
+        // Pager Indicator and Navigation Arrows
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .constrainAs(pagerIndicatorAndNavigationArrows) {
+                    centerHorizontallyTo(parent)
+                    bottom.linkTo(parent.bottom)
+                }
+                .padding(top = 50.dp),
+            contentAlignment = Alignment.Center
         ) {
-            PagerIndicator(
-                pagerState = pagerState)
-
-            Spacer(Modifier.height(10.dp))
-
+            // Left arrow or empty
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = if (pagerState.currentPage == 0) Arrangement.End else Arrangement.SpaceBetween
+                modifier = Modifier
+                    .align(Alignment.CenterStart),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-
                 if (pagerState.currentPage > 0) {
                     IconButton(
                         onClick = {
@@ -221,14 +242,27 @@ fun OnboardingContent(
                         )
                     }
                 }
+            }
 
+            PagerIndicator(
+                pagerState = pagerState,
+                modifier = Modifier.align(Alignment.Center))
+
+
+            // Right arrow or scan button
+
+            Row(
+                modifier = Modifier
+                    .align(Alignment.CenterEnd),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 when(pagerState.currentPage) {
                     2 ->  {
                         Button(
                             onClick = onOnboardingFinished,
                         ) {
                             Text(
-                                text = stringResource(R.string.start_scanning)
+                                text = stringResource(R.string.scan)
                             )
                         }
                     }
@@ -250,8 +284,6 @@ fun OnboardingContent(
             }
         }
     }
-
-
 }
 
 @Preview
