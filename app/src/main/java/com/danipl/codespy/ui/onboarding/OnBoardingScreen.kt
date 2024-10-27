@@ -33,6 +33,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Blue
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.LinkAnnotation
@@ -124,7 +125,7 @@ fun OnboardingContent(
         HorizontalPager (
             state = pagerState,
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .constrainAs(horizontalPager) {
                     centerHorizontallyTo(parent)
                     top.linkTo(parent.top)
@@ -153,20 +154,22 @@ fun OnboardingContent(
 
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(rememberScrollState())
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.Top
             ) {
 
-                Spacer(modifier = Modifier.height(100.dp))
+                val screenSize = LocalConfiguration.current.screenHeightDp
+
+                Spacer(modifier = Modifier.height((screenSize/5).dp))
 
                 Image(
-                    modifier = Modifier.requiredHeight(300.dp),
+                    modifier = Modifier
+                        .requiredHeight(300.dp)
+                        .padding(12.dp),
                     painter = painterResource(id = drawableResId),
                     contentDescription = ""
                 )
-
-
-                Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
                     text = title,
