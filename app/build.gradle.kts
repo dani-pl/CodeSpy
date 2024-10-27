@@ -33,7 +33,7 @@ android {
         debug {
             isMinifyEnabled = false
             isShrinkResources = false
-            applicationIdSuffix = ".debug"
+
             signingConfig = signingConfigs.getByName("debug")
         }
 
