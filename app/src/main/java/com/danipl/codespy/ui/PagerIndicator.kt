@@ -23,7 +23,7 @@ fun PagerIndicator(
     Row(
         modifier
             .wrapContentHeight()
-            .padding(bottom = 8.dp),
+            .padding(horizontal = 10.dp),
         horizontalArrangement = Arrangement.Center
     ) {
         repeat(pagerState.pageCount) { iteration ->
